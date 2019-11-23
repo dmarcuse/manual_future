@@ -1,0 +1,18 @@
+[package]
+name = "manual_future"
+description = "A future that must be manually completed, similar to Java's CompletableFuture"
+version = "0.1.0"
+authors = ["Dominic Marcuse <dominic@marcuse.us>"]
+edition = "2018"
+repository = "https://github.com/dmarcuse/manual_future.git"
+homepage = "https://github.com/dmarcuse/manual_future"
+readme = "README.md"
+license = "MIT"
+keywords = [ "async", "await", "future", "completablefuture", "complete" ]
+categories = [ "asynchronous", "concurrency" ]
+
+[dependencies]
+futures = { version = "0.3.1", features = [ "unstable", "bilock" ] }
+
+[dev-dependencies]
+async-std = { version = "1.1.0", features = [ "unstable", "attributes" ] }
