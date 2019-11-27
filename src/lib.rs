@@ -84,10 +84,7 @@ impl<T: Unpin> ManualFuture<T> {
     /// `ManualFutureCompleter` is used to set the value.
     pub fn new() -> (Self, ManualFutureCompleter<T>) {
         let (a, b) = BiLock::new(State::new(None));
-        (
-            Self { state: a },
-            ManualFutureCompleter { state: b },
-        )
+        (Self { state: a }, ManualFutureCompleter { state: b })
     }
 
     /// Create a new `ManualFuture` which has already been completed with the
@@ -127,14 +124,14 @@ impl<T: Unpin> Future for ManualFuture<T> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use async_std::future::timeout;
     use futures::executor::block_on;
     use futures::future::join;
     use std::thread::sleep;
     use std::thread::spawn;
     use std::time::Duration;
+    use tokio::time::timeout;
 
-    #[async_std::test]
+    #[tokio::test]
     async fn test_not_completed() {
         let (future, _) = ManualFuture::<()>::new();
         timeout(Duration::from_millis(100), future)
@@ -142,13 +139,13 @@ mod tests {
             .expect_err("should not complete");
     }
 
-    #[async_std::test]
+    #[tokio::test]
     async fn test_manual_completed() {
         let (future, completer) = ManualFuture::<()>::new();
         assert_eq!(join(future, completer.complete(())).await, ((), ()));
     }
 
-    #[async_std::test]
+    #[tokio::test]
     async fn test_pre_completed() {
         assert_eq!(ManualFuture::new_completed(()).await, ());
     }
