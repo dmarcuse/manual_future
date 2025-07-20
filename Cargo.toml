@@ -1,7 +1,7 @@
 [package]
 name = "manual_future"
 description = "A future that must be manually completed, similar to Java's CompletableFuture"
-version = "0.1.2"
+version = "0.1.3"
 authors = ["Dana Marcuse <dana@marcuse.us>"]
 edition = "2018"
 repository = "https://github.com/dmarcuse/manual_future.git"
@@ -12,7 +12,7 @@ keywords = ["async", "await", "future", "completablefuture", "complete"]
 categories = ["asynchronous", "concurrency"]
 
 [dependencies]
-futures-util = { version = "0.3.31", features = ["unstable", "bilock"] }
+futures-util = { version = "0.3.31", default-features = false, features = ["unstable", "bilock"] }
 
 [dev-dependencies]
 futures-executor = "0.3.31"
