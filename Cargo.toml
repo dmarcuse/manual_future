@@ -2,17 +2,17 @@
 name = "manual_future"
 description = "A future that must be manually completed, similar to Java's CompletableFuture"
 version = "0.1.1"
-authors = ["Dominic Marcuse <dominic@marcuse.us>"]
+authors = ["Dana Marcuse <dana@marcuse.us>"]
 edition = "2018"
 repository = "https://github.com/dmarcuse/manual_future.git"
 homepage = "https://github.com/dmarcuse/manual_future"
 readme = "README.md"
 license = "MIT"
-keywords = [ "async", "await", "future", "completablefuture", "complete" ]
-categories = [ "asynchronous", "concurrency" ]
+keywords = ["async", "await", "future", "completablefuture", "complete"]
+categories = ["asynchronous", "concurrency"]
 
 [dependencies]
-futures = { version = "0.3.1", features = [ "unstable", "bilock" ] }
+futures = { version = "0.3.1", features = ["unstable", "bilock"] }
 
 [dev-dependencies]
-tokio = { version = "0.2.1", features = [ "macros", "time", "rt-core" ] }
+tokio = { version = "1.46.1", features = ["macros", "rt", "time"] }
