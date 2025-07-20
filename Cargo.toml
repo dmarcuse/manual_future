@@ -12,7 +12,8 @@ keywords = ["async", "await", "future", "completablefuture", "complete"]
 categories = ["asynchronous", "concurrency"]
 
 [dependencies]
-futures = { version = "0.3.1", features = ["unstable", "bilock"] }
+futures-util = { version = "0.3.31", features = ["unstable", "bilock"] }
 
 [dev-dependencies]
+futures-executor = "0.3.31"
 tokio = { version = "1.46.1", features = ["macros", "rt", "time"] }

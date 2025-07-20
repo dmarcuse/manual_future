@@ -9,7 +9,7 @@
 //! completer:
 //! ```
 //! # use manual_future::ManualFuture;
-//! # use futures::executor::block_on;
+//! # use futures_executor::block_on;
 //! let (future, completer) = ManualFuture::<i32>::new();
 //! block_on(async { completer.complete(5).await });
 //! assert_eq!(block_on(future), 5);
@@ -19,11 +19,11 @@
 //! resolved:
 //! ```
 //! # use manual_future::ManualFuture;
-//! # use futures::executor::block_on;
+//! # use futures_executor::block_on;
 //! assert_eq!(block_on(ManualFuture::new_completed(10)), 10);
 //! ```
 
-use futures::lock::BiLock;
+use futures_util::lock::BiLock;
 use std::future::Future;
 use std::marker::Unpin;
 use std::pin::Pin;
@@ -125,8 +125,7 @@ impl<T: Unpin> Future for ManualFuture<T> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use futures::executor::block_on;
-    use futures::future::join;
+    use futures_executor::block_on;
     use std::thread::sleep;
     use std::thread::spawn;
     use std::time::Duration;
@@ -143,7 +142,7 @@ mod tests {
     #[tokio::test]
     async fn test_manual_completed() {
         let (future, completer) = ManualFuture::<()>::new();
-        assert_eq!(join(future, completer.complete(())).await, ((), ()));
+        assert_eq!(tokio::join!(future, completer.complete(())), ((), ()));
     }
 
     #[tokio::test]
