@@ -23,8 +23,6 @@
 //! assert_eq!(block_on(ManualFuture::new_completed(10)), 10);
 //! ```
 
-#![warn(clippy::pedantic)]
-
 use futures::lock::BiLock;
 use std::future::Future;
 use std::marker::Unpin;
@@ -32,6 +30,7 @@ use std::pin::Pin;
 use std::task::Waker;
 use std::task::{Context, Poll};
 
+#[derive(Debug)]
 enum State<T> {
     Incomplete,
     Waiting(Waker),
@@ -51,7 +50,8 @@ impl<T> State<T> {
 ///
 /// This future will not resolve until it's been explicitly completed, either
 /// with `new_completed` or with `ManualFutureCompleter::complete`.
-pub struct ManualFuture<T: Unpin> {
+#[derive(Debug)]
+pub struct ManualFuture<T> {
     state: BiLock<State<T>>,
 }
 
@@ -59,7 +59,8 @@ pub struct ManualFuture<T: Unpin> {
 ///
 /// Dropping a `ManualFutureCompleter` will cause the associated `ManualFuture`
 /// to never complete.
-pub struct ManualFutureCompleter<T: Unpin> {
+#[derive(Debug)]
+pub struct ManualFutureCompleter<T> {
     state: BiLock<State<T>>,
 }
 
@@ -74,12 +75,12 @@ impl<T: Unpin> ManualFutureCompleter<T> {
         match std::mem::replace(&mut *state, State::Complete(Some(value))) {
             State::Incomplete => {}
             State::Waiting(w) => w.wake(),
-            _ => panic!("future already completed"),
+            State::Complete(_) => unreachable!("future already completed"),
         }
     }
 }
 
-impl<T: Unpin> ManualFuture<T> {
+impl<T> ManualFuture<T> {
     /// Create a new `ManualFuture` which will be resolved once the associated
     /// `ManualFutureCompleter` is used to set the value.
     pub fn new() -> (Self, ManualFutureCompleter<T>) {
