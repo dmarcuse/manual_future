@@ -12,7 +12,11 @@ keywords = ["async", "await", "future", "completablefuture", "complete"]
 categories = ["asynchronous", "concurrency"]
 
 [dependencies]
-futures-util = { version = "0.3.31", default-features = false, features = ["unstable", "bilock"] }
+futures-util = { version = "0.3.31", default-features = false, features = [
+    "unstable",
+    "alloc",
+    "bilock",
+] }
 
 [dev-dependencies]
 futures-executor = "0.3.31"
