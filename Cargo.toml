@@ -1,7 +1,7 @@
 [package]
 name = "manual_future"
 description = "A future that must be manually completed, similar to Java's CompletableFuture"
-version = "0.1.3"
+version = "0.1.4"
 authors = ["Dana Marcuse <dana@marcuse.us>"]
 edition = "2018"
 repository = "https://github.com/dmarcuse/manual_future.git"
